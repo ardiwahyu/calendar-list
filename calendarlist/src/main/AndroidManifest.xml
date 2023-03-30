@@ -6,15 +6,6 @@
         android:icon="@mipmap/ic_launcher"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true" >
-        <activity
-            android:name=".CalendarActivity"
-            android:exported="false"
-            android:label="@string/title_activity_calendar"
-            android:theme="@style/Theme.CalendarList.NoActionBar" >
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
     </application>
 
 </manifest>
