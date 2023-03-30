@@ -1,0 +1,8 @@
+<resources>
+  <style name="Theme.CalendarList.NoActionBar" >
+  <item name="windowActionBar">false</item>
+  <item name="windowNoTitle">true</item>
+</style>
+  <style name="Theme.CalendarList.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+  <style name="Theme.CalendarList.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+</resources>
