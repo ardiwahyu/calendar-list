@@ -1,5 +1,0 @@
-<resources>
-    <style name="Theme.CalendarList.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="Theme.CalendarList.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-</resources>

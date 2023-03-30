@@ -1,4 +1,4 @@
-package com.github.fragment
+package com.github.calendarlist
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -9,9 +9,8 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.github.calendarlist.R
 import com.github.calendarlist.databinding.LayoutCalendarBinding
-import com.github.fragment.CalendarFragment.Companion.indoMonthName
+import com.github.calendarlist.CalendarFragment.Companion.indoMonthName
 import java.util.*
 
 

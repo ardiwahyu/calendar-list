@@ -1,4 +1,4 @@
-package com.github.fragment
+package com.github.calendarlist
 
 import android.content.Context
 import android.graphics.Color
@@ -10,7 +10,6 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.github.calendarlist.R
 import com.github.calendarlist.databinding.LayoutCalendarDayBinding
 import java.util.*
 import java.util.Calendar.*

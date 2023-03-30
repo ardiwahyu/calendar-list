@@ -1,13 +1,12 @@
-package com.github.fragment
+package com.github.calendarlist
 
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.github.calendarlist.databinding.FragmentCalendarBinding
-import java.util.Calendar
+import java.util.*
 
 class CalendarFragment(
     private val selectedDate: Calendar,
