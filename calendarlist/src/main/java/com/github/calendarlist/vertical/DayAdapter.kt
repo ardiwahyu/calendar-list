@@ -1,4 +1,4 @@
-package com.github.calendarlist
+package com.github.calendarlist.vertical
 
 import android.content.Context
 import android.graphics.Color
@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.github.calendarlist.R
 import com.github.calendarlist.databinding.LayoutCalendarDayBinding
 import java.util.*
 import java.util.Calendar.*
@@ -82,28 +83,40 @@ class DayAdapter constructor(
                         calSelected.get(MONTH) == calToBind.get(MONTH) &&
                         calSelected.get(DAY_OF_MONTH) == item.toInt()
                 if (now) {
-                    holder.binding.calendarDayText.background = ContextCompat.getDrawable(context, R.drawable.shape_circle_now)
+                    holder.binding.calendarDayText.background = ContextCompat.getDrawable(context,
+                        R.drawable.shape_circle_now
+                    )
                 }
                 if (dateSelected) {
                     onFindDateSelected?.invoke(holder.binding.calendarDayText)
-                    holder.binding.calendarDayText.background = ContextCompat.getDrawable(context, R.drawable.shape_circle_selected)
+                    holder.binding.calendarDayText.background = ContextCompat.getDrawable(context,
+                        R.drawable.shape_circle_selected
+                    )
                 }
 
                 if (position % 7 == 6) {
-                    holder.binding.calendarDayText.setTextColor(ContextCompat.getColorStateList(context, R.color.md_red_100))
+                    holder.binding.calendarDayText.setTextColor(ContextCompat.getColorStateList(context,
+                        R.color.md_red_100
+                    ))
                     if (!notAvailable) {
                         holder.binding.calendarDayText.setTextColor(Color.RED)
                         holder.binding.calendarDayText.setOnClickListener {
-                            holder.binding.calendarDayText.background = ContextCompat.getDrawable(context, R.drawable.shape_circle_selected)
+                            holder.binding.calendarDayText.background = ContextCompat.getDrawable(context,
+                                R.drawable.shape_circle_selected
+                            )
                             onClick?.invoke(calToBind.apply { set(DAY_OF_MONTH, item.toInt()) }, holder.binding.calendarDayText)
                         }
                     }
                 } else {
-                    holder.binding.calendarDayText.setTextColor(ContextCompat.getColorStateList(context, R.color.md_blue_grey_200))
+                    holder.binding.calendarDayText.setTextColor(ContextCompat.getColorStateList(context,
+                        R.color.md_blue_grey_200
+                    ))
                     if (!notAvailable) {
                         holder.binding.calendarDayText.setTextColor(Color.BLACK)
                         holder.binding.calendarDayText.setOnClickListener {
-                            holder.binding.calendarDayText.background = ContextCompat.getDrawable(context, R.drawable.shape_circle_selected)
+                            holder.binding.calendarDayText.background = ContextCompat.getDrawable(context,
+                                R.drawable.shape_circle_selected
+                            )
                             onClick?.invoke(calToBind.apply { set(DAY_OF_MONTH, item.toInt()) }, holder.binding.calendarDayText)
                         }
                     }

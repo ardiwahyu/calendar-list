@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:background="?attr/selectableItemBackground"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_day"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Rabu"
+        android:layout_marginTop="4dp"
+        android:fontFamily="@font/poppins"/>
+
+    <TextView
+        android:id="@+id/tv_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="26"
+        android:fontFamily="@font/poppins_bold"
+        android:textSize="20sp"/>
+
+    <View
+        android:id="@+id/view_active"
+        android:layout_width="40dp"
+        android:layout_height="4dp"
+        android:background="#0076CE"/>
+</androidx.appcompat.widget.LinearLayoutCompat>

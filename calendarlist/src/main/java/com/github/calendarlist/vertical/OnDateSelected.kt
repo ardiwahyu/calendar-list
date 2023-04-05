@@ -1,4 +1,4 @@
-package com.github.calendarlist
+package com.github.calendarlist.vertical
 
 import java.util.Calendar
 

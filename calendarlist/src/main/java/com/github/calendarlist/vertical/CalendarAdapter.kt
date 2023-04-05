@@ -1,4 +1,4 @@
-package com.github.calendarlist
+package com.github.calendarlist.vertical
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -9,8 +9,9 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.github.calendarlist.R
 import com.github.calendarlist.databinding.LayoutCalendarBinding
-import com.github.calendarlist.CalendarFragment.Companion.indoMonthName
+import com.github.calendarlist.utils.DateUtil.Companion.parse
 import java.util.*
 
 
@@ -51,9 +52,8 @@ class CalendarAdapter constructor(
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         try {
-            val item = Calendar.getInstance().apply { timeInMillis = getItem(position) }
-            holder.binding.tvMonthYear.text =
-                "${indoMonthName[item.get(Calendar.MONTH)]} ${item.get(Calendar.YEAR)}"
+            val item = getItem(position)
+            holder.binding.tvMonthYear.text = item.parse("MMM yyyy")
             val dayAdapter = DayAdapter(
                 calendarToBind = getItem(position),
                 selectedDate = selectedDate.timeInMillis,
@@ -63,7 +63,9 @@ class CalendarAdapter constructor(
             dayAdapter.onClick = { calendar: Calendar, textView: TextView ->
                 currentDateSelected?.background = null
                 currentDateSelected = textView
-                textView.background = ContextCompat.getDrawable(context, R.drawable.shape_circle_selected)
+                textView.background = ContextCompat.getDrawable(context,
+                    R.drawable.shape_circle_selected
+                )
                 onClick?.invoke(calendar)
             }
             holder.binding.rvCalendar.adapter = dayAdapter.bind()

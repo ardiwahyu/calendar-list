@@ -1,4 +1,4 @@
-package com.github.calendarlist
+package com.github.calendarlist.vertical
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -16,7 +16,6 @@ class CalendarFragment(
 ) : Fragment() {
     companion object {
         enum class DISABLE { AFTER, BEFORE }
-        val indoMonthName = arrayOf("Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu", "Sep", "Okt", "Nop", "Des")
     }
     private var _binding: FragmentCalendarBinding? = null
     private val binding get() = _binding!!
