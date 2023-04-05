@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.github.calendarlist.R
 import com.github.calendarlist.databinding.LayoutCalendarBinding
 import com.github.calendarlist.utils.DateUtil.Companion.parse
+import com.github.calendarlist.utils.Disable
 import java.util.*
 
 
@@ -19,7 +20,7 @@ class CalendarAdapter constructor(
     private val startDate: Calendar,
     private val endDate: Calendar,
     private val selectedDate: Calendar,
-    private val disable: CalendarFragment.Companion.DISABLE
+    private val disable: Disable
 ) : ListAdapter<Long, CalendarAdapter.ViewHolder>(
     diffUtils
 ){

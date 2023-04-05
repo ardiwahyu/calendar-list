@@ -6,17 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.github.calendarlist.databinding.FragmentCalendarBinding
+import com.github.calendarlist.utils.Disable
 import java.util.*
 
 class CalendarFragment(
     private val selectedDate: Calendar,
     private val minDate: Calendar,
     private val maxDate: Calendar,
-    private val disable: DISABLE
+    private val disable: Disable
 ) : Fragment() {
-    companion object {
-        enum class DISABLE { AFTER, BEFORE }
-    }
     private var _binding: FragmentCalendarBinding? = null
     private val binding get() = _binding!!
     var onDateSelected: ((Calendar) -> Unit)? = null

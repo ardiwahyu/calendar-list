@@ -40,9 +40,14 @@ class CalendarAdapter constructor(
         val cal = Calendar.getInstance()
         if (startDate.before(cal)) startDate = cal
         var day = startDate.get(Calendar.DAY_OF_MONTH)
+        var month = startDate.get(Calendar.MONTH)
         while (startDate.before(endDate)) {
             startDate.set(Calendar.DAY_OF_MONTH, day)
             listCalendar.add(startDate.timeInMillis)
+            if (month != startDate.get(Calendar.MONTH)) {
+                day = 1
+                month = startDate.get(Calendar.MONTH)
+            }
             day += 1
         }
         submitList(listCalendar)

@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.github.calendarlist.R
 import com.github.calendarlist.databinding.LayoutCalendarDayBinding
+import com.github.calendarlist.utils.Disable
 import java.util.*
 import java.util.Calendar.*
 
@@ -19,7 +20,7 @@ import java.util.Calendar.*
 class DayAdapter constructor(
     private var calendarToBind: Long,
     private var selectedDate: Long,
-    private val disable: CalendarFragment.Companion.DISABLE
+    private val disable: Disable
 ) : ListAdapter<Int, DayAdapter.ViewHolder>(diffUtils){
 
     private lateinit var context: Context
@@ -60,7 +61,7 @@ class DayAdapter constructor(
                 holder.binding.calendarDayText.setTextColor(Color.WHITE)
             } else {
                 val notAvailable =
-                    if (disable == CalendarFragment.Companion.DISABLE.AFTER) {
+                    if (disable == Disable.AFTER) {
                         calToBind.get(YEAR) > calendar.get(YEAR) ||
                         (calToBind.get(YEAR) == calendar.get(YEAR) &&
                                 calToBind.get(MONTH) > calendar.get(MONTH)) ||
