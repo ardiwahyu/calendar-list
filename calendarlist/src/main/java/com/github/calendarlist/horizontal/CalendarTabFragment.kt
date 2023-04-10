@@ -1,24 +1,30 @@
 package com.github.calendarlist.horizontal
 
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
+import androidx.fragment.app.Fragment
 import com.github.calendarlist.databinding.FragmentCalendarTabBinding
 import java.util.*
 import kotlin.math.floor
 
 class CalendarTabFragment(
-    private val selectedDate: Calendar,
+    private var selectedDate: Calendar,
     private val minDate: Calendar,
     private val maxDate: Calendar
 ) : Fragment() {
     private var _binding: FragmentCalendarTabBinding? = null
     private val binding get() = _binding!!
     var onDateSelected: ((Calendar) -> Unit)? = null
+    private val calendarAdapter by lazy {
+        CalendarAdapter(
+            selectedDate = selectedDate,
+            startDate = minDate,
+            endDate = maxDate
+        )
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,11 +36,6 @@ class CalendarTabFragment(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         var widthScreen: Int
-        val calendarAdapter = CalendarAdapter(
-            selectedDate = selectedDate,
-            startDate = minDate,
-            endDate = maxDate
-        )
         calendarAdapter.onFindDateSelected = {
             binding.rvCalendar.scrollToPosition(it + (it - floor(it/2.toDouble()).toInt()))
         }
@@ -47,6 +48,11 @@ class CalendarTabFragment(
                 binding.root.viewTreeObserver.removeOnGlobalLayoutListener(this)
             }
         })
+    }
+
+    fun changeDateSelected(timeInMillis: Long) {
+        selectedDate = Calendar.getInstance().apply { setTimeInMillis(timeInMillis) }
+        binding.rvCalendar.adapter = calendarAdapter.changeDateSelected(timeInMillis)
     }
 
     override fun onDestroyView() {

@@ -17,9 +17,9 @@ import java.util.*
 
 
 class CalendarAdapter constructor(
-    private var startDate: Calendar,
+    private val startDate: Calendar,
     private val endDate: Calendar,
-    private val selectedDate: Calendar
+    private var selectedDate: Calendar
 ) : ListAdapter<Long, CalendarAdapter.ViewHolder>(
     diffUtils
 ){
@@ -35,18 +35,24 @@ class CalendarAdapter constructor(
         return ViewHolder(binding)
     }
 
+    fun changeDateSelected(timeInMillis: Long): CalendarAdapter {
+        selectedDate = Calendar.getInstance().apply { setTimeInMillis(timeInMillis) }
+        return bind()
+    }
+
     fun bind(): CalendarAdapter {
         val listCalendar = arrayListOf<Long>()
         val cal = Calendar.getInstance()
-        if (startDate.before(cal)) startDate = cal
-        var day = startDate.get(Calendar.DAY_OF_MONTH)
-        var month = startDate.get(Calendar.MONTH)
-        while (startDate.before(endDate)) {
-            startDate.set(Calendar.DAY_OF_MONTH, day)
-            listCalendar.add(startDate.timeInMillis)
-            if (month != startDate.get(Calendar.MONTH)) {
+        var start = Calendar.getInstance().apply { timeInMillis = startDate.timeInMillis }
+        if (start.before(cal)) start = cal
+        var day = start.get(Calendar.DAY_OF_MONTH)
+        var month = start.get(Calendar.MONTH)
+        while (start.before(endDate)) {
+            start.set(Calendar.DAY_OF_MONTH, day)
+            listCalendar.add(start.timeInMillis)
+            if (month != start.get(Calendar.MONTH)) {
                 day = 1
-                month = startDate.get(Calendar.MONTH)
+                month = start.get(Calendar.MONTH)
             }
             day += 1
         }
