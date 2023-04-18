@@ -2,7 +2,7 @@ package com.github.calendarlist.vertical
 
 import android.content.Context
 import android.graphics.Color
-import android.util.Log
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.github.calendarlist.R
 import com.github.calendarlist.databinding.LayoutCalendarDayBinding
-import com.github.calendarlist.utils.Disable
 import java.util.*
 import java.util.Calendar.*
 
@@ -20,7 +19,8 @@ import java.util.Calendar.*
 class DayAdapter constructor(
     private var calendarToBind: Long,
     private var selectedDate: Long,
-    private val disable: Disable
+    private val startDate: Calendar,
+    private val endDate: Calendar,
 ) : ListAdapter<Int, DayAdapter.ViewHolder>(diffUtils){
 
     private lateinit var context: Context
@@ -35,9 +35,6 @@ class DayAdapter constructor(
         context = parent.context
         calendar = getInstance()
         calSelected = getInstance().apply { timeInMillis = selectedDate }
-
-        Log.d("haloo", "calendar ${calSelected.get(DAY_OF_MONTH)} ${calSelected.get(MONTH)} ${calSelected.get(
-            YEAR)}")
         return ViewHolder(binding)
     }
 
@@ -60,73 +57,54 @@ class DayAdapter constructor(
             if (item == "0") {
                 holder.binding.calendarDayText.setTextColor(Color.WHITE)
             } else {
-                val notAvailable =
-                    if (disable == Disable.AFTER) {
-                        calToBind.get(YEAR) > calendar.get(YEAR) ||
-                        (calToBind.get(YEAR) == calendar.get(YEAR) &&
-                                calToBind.get(MONTH) > calendar.get(MONTH)) ||
-                        (calToBind.get(YEAR) == calendar.get(YEAR) &&
-                                calToBind.get(MONTH) == calendar.get(MONTH) &&
-                                item.toInt() > calendar.get(DAY_OF_MONTH))
-                    }
-                    else {
-                        calToBind.get(YEAR) < calendar.get(YEAR) ||
-                        calToBind.get(YEAR) == calendar.get(YEAR) &&
-                                calToBind.get(MONTH) < calendar.get(MONTH) ||
-                        (calToBind.get(YEAR) == calendar.get(YEAR) &&
-                                calToBind.get(MONTH) == calendar.get(MONTH) &&
-                                item.toInt() < calendar.get(DAY_OF_MONTH))
-                    }
-                val now = calToBind.get(YEAR) == calendar.get(YEAR) &&
-                        calToBind.get(MONTH) == calendar.get(MONTH) &&
+                val callItem = getInstance().apply {
+                    timeInMillis = calendarToBind
+                    set(DAY_OF_MONTH, item.toInt())
+                }
+                val notAvailable = callItem.before(startDate) || callItem.after(endDate)
+                val now = callItem.get(YEAR) == calendar.get(YEAR) &&
+                        callItem.get(MONTH) == calendar.get(MONTH) &&
                         calendar.get(DAY_OF_MONTH) == item.toInt()
-                val dateSelected = calSelected.get(YEAR) == calToBind.get(YEAR) &&
-                        calSelected.get(MONTH) == calToBind.get(MONTH) &&
+                val dateSelected = calSelected.get(YEAR) == callItem.get(YEAR) &&
+                        calSelected.get(MONTH) == callItem.get(MONTH) &&
                         calSelected.get(DAY_OF_MONTH) == item.toInt()
-                if (now) {
-                    holder.binding.calendarDayText.background = ContextCompat.getDrawable(context,
-                        R.drawable.shape_circle_now
-                    )
-                }
-                if (dateSelected) {
-                    onFindDateSelected?.invoke(holder.binding.calendarDayText)
-                    holder.binding.calendarDayText.background = ContextCompat.getDrawable(context,
-                        R.drawable.shape_circle_selected
-                    )
-                }
-
                 if (position % 7 == 6) {
-                    holder.binding.calendarDayText.setTextColor(ContextCompat.getColorStateList(context,
-                        R.color.md_red_100
-                    ))
+                    holder.binding.calendarDayText.setTextColor(getColor(R.color.md_red_100))
                     if (!notAvailable) {
-                        holder.binding.calendarDayText.setTextColor(Color.RED)
+                        holder.binding.calendarDayText.setTextColor(getColor(R.color.md_red_600))
                         holder.binding.calendarDayText.setOnClickListener {
-                            holder.binding.calendarDayText.background = ContextCompat.getDrawable(context,
-                                R.drawable.shape_circle_selected
-                            )
-                            onClick?.invoke(calToBind.apply { set(DAY_OF_MONTH, item.toInt()) }, holder.binding.calendarDayText)
+                            onClick?.invoke(callItem, holder.binding.calendarDayText)
                         }
                     }
                 } else {
-                    holder.binding.calendarDayText.setTextColor(ContextCompat.getColorStateList(context,
-                        R.color.md_blue_grey_200
-                    ))
+                    holder.binding.calendarDayText.setTextColor(getColor(R.color.md_blue_grey_200))
                     if (!notAvailable) {
-                        holder.binding.calendarDayText.setTextColor(Color.BLACK)
+                        holder.binding.calendarDayText.setTextColor(getColor(R.color.black))
                         holder.binding.calendarDayText.setOnClickListener {
-                            holder.binding.calendarDayText.background = ContextCompat.getDrawable(context,
-                                R.drawable.shape_circle_selected
-                            )
-                            onClick?.invoke(calToBind.apply { set(DAY_OF_MONTH, item.toInt()) }, holder.binding.calendarDayText)
+                            onClick?.invoke(callItem, holder.binding.calendarDayText)
                         }
                     }
+                }
+                if (now) {
+                    holder.binding.calendarDayText.background = getDrawable(R.drawable.shape_circle_now)
+                }
+                if (dateSelected) {
+                    onFindDateSelected?.invoke(holder.binding.calendarDayText)
+                    holder.binding.calendarDayText.background = getDrawable(R.drawable.shape_circle_selected)
                 }
             }
             holder.binding.calendarDayText.text = item
         } catch (e: Exception) {
             e.printStackTrace()
         }
+    }
+
+    private fun getColor(id: Int): Int {
+        return ContextCompat.getColor(context, id)
+    }
+
+    private fun getDrawable(id: Int): Drawable? {
+        return ContextCompat.getDrawable(context, id)
     }
 
     class ViewHolder(itemBinding: LayoutCalendarDayBinding) : RecyclerView.ViewHolder(itemBinding.root) {

@@ -7,23 +7,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".vertical.CalendarFragment">
 
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/nsv_container"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_list_calendar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginHorizontal="8dp"
+        android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_list_calendar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="8dp"
-            android:orientation="vertical"
-            android:paddingBottom="40dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/layout_calendar"/>
-    </androidx.core.widget.NestedScrollView>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/layout_calendar"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
