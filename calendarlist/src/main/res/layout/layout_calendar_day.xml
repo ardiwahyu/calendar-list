@@ -16,6 +16,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:gravity="center"
+        android:fontFamily="@font/poppins"
         android:textSize="16sp"
         tools:text="22"
         app:layout_constraintDimensionRatio="1:1" />
